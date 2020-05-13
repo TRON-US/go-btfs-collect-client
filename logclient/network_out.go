@@ -175,9 +175,9 @@ func (netOut *NetworkOut) send(compressed []byte) error {
 		}
 		ebody, err := ioutil.ReadAll(httpResp.Body)
 		if err != nil {
-			return fmt.Errorf("error readng error body: %s: %s", httpResp.StatusCode, err)
+			return fmt.Errorf("error readng error body: %d: %s", httpResp.StatusCode, err)
 		}
-		err = fmt.Errorf("error response %s from remote server %s: %s",
+		err = fmt.Errorf("error response %d from remote server %s: %s",
 			httpResp.StatusCode, netOut.conf.URL, string(ebody))
 		if netOut.backoff.Attempt() >= float64(netOut.conf.NetworkSendRetries) {
 			return err
