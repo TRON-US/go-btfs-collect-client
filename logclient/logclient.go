@@ -10,7 +10,6 @@ const (
 )
 
 const (
-	LogClientAPIEnabled       = true
 	MininumCollectionLogLevel = 4
 )
 
@@ -34,15 +33,13 @@ func NewLogClient(conf *Configuration) (*LogClient, error) {
 	inputChan = ntkOut.inputChan
 
 	var logR *LogReader
-
-	if !conf.LogAPIEnabled {
-		logR, err = NewLogReader(conf, ntkOut.inputChan)
-		if err != nil {
-			return nil, err
-		}
-		inputChan = logR.inputChan
+	logR, err = NewLogReader(conf, ntkOut.inputChan)
+	if err != nil {
+		return nil, err
 	}
+	inputChan = logR.inputChan
 
+	// Return the execution object instance.
 	return &LogClient{
 		minCollectLogLevel: MininumCollectionLogLevel,
 		conf:               conf,

@@ -13,7 +13,6 @@ type Configuration struct {
 	Labels string // TODO: <-model.LabelSet
 
 	// The current plan operator tree related parameters
-	LogAPIEnabled bool
 
 	// URL is the log server http push endpoint
 	URL string

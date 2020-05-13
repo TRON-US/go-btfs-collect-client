@@ -13,7 +13,6 @@ func main() {
 	// init configuration
 	conf := &logclient.Configuration{
 		Labels:             `{job="btnode-log"}`, // TODO: add cid.String() for the current btfs node as "instance"
-		LogAPIEnabled:      false,
 		URL:                "http://localhost:3100/loki/api/v1/push",
 		Destination:        "loki",
 		BatchWaitDuration:  10 * time.Second,
