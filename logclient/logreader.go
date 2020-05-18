@@ -21,10 +21,19 @@ type LogReader struct {
 	waitGroup  sync.WaitGroup
 }
 
-func NewLogReader(conf *Configuration, outChan chan []Entry) (*LogReader, error) {
+func NewLogReader(conf *Configuration, outChan chan []Entry, inChan chan []Entry) (*LogReader, error) {
+	// Use the given input channel if it is not nil.
+	// This channel will be passed in since this operator is the bottom one.
+	var inChannel chan []Entry
+	if inChan != nil {
+		inChannel = inChan
+	} else {
+		inChannel = make(chan []Entry)
+	}
+
 	logReader := &LogReader{
 		conf:       conf,
-		inputChan:  make(chan []Entry),
+		inputChan:  inChannel,
 		outputChan: outChan,
 		stopChan:   make(chan struct{}),
 	}

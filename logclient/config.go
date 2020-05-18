@@ -5,7 +5,18 @@ import (
 )
 
 const (
-	DEFAULT_NUM_OF_RETRIES = 3
+	DebugLevel = iota + 1
+	InfoLevel
+	WarnLevel
+	ErrorLevel
+	DevPanicLevel
+	PanicLevel
+)
+
+const (
+	MininumCollectionLogLevel          = 4
+	DEFAULT_INPUT_CHANNEL_BUF_CAPACITY = 100
+	DEFAULT_NUM_OF_RETRIES             = 3
 )
 
 type Configuration struct {

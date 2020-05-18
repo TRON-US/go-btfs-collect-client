@@ -22,7 +22,7 @@ func main() {
 	}
 
 	// Open operators
-	logc, err := logclient.NewLogClient(conf)
+	logc, err := logclient.NewLogClient(conf, nil)
 	if err != nil {
 		log.Printf("error: failed to create LogClient: %s\n", err)
 		os.Exit(1)
