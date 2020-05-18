@@ -14,7 +14,7 @@ const (
 )
 
 const (
-	MininumCollectionLogLevel          = 4
+	MininumCollectionLogLevel          = ErrorLevel
 	DEFAULT_INPUT_CHANNEL_BUF_CAPACITY = 100
 	DEFAULT_NUM_OF_RETRIES             = 3
 )
