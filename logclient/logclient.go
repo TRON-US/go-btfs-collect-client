@@ -1,17 +1,7 @@
 package logclient
 
-const (
-	DebugLevel = iota + 1
-	InfoLevel
-	WarnLevel
-	ErrorLevel
-	DevPanicLevel
-	PanicLevel
-)
-
-const (
-	MininumCollectionLogLevel = 4
-)
+// Output channel to LogClient
+var LogOutputChan = make(chan []Entry, DEFAULT_INPUT_CHANNEL_BUF_CAPACITY)
 
 type LogClient struct {
 	conf       *Configuration
@@ -23,7 +13,7 @@ type LogClient struct {
 	minCollectLogLevel int
 }
 
-func NewLogClient(conf *Configuration) (*LogClient, error) {
+func NewLogClient(conf *Configuration, passedInputChan chan []Entry) (*LogClient, error) {
 	// initialize operators top down
 	var inputChan chan []Entry
 	ntkOut, err := NewNetworkOut(conf)
@@ -32,8 +22,11 @@ func NewLogClient(conf *Configuration) (*LogClient, error) {
 	}
 	inputChan = ntkOut.inputChan
 
+	// bottom most operator
+	// If the given passedInputChan is not null, pass to
+	// the bottom operator.
 	var logR *LogReader
-	logR, err = NewLogReader(conf, ntkOut.inputChan)
+	logR, err = NewLogReader(conf, ntkOut.inputChan, passedInputChan)
 	if err != nil {
 		return nil, err
 	}
